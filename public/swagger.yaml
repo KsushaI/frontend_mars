@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Earth-Mars Chat API
+  version: 1.0.0
+  description: API для чата между Землей и Марсом
+
+servers:
+  - url: http://localhost:8005
+    description: Earth WebSocket server
+  - url: http://localhost:8010
+    description: Mars WebSocket server
+
+paths:
+  /ReceiveMessage:
+    post:
+      tags:
+        - Mars
+      summary: Получить сообщение на Марсе
+      description: Отправляет сообщение всем подключенным клиентам Марса
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        200:
+          description: Сообщение успешно разослано
+
+  /ReceiveResponse:
+    post:
+      tags:
+        - Earth
+      summary: Получить квитанцию на Земле
+      description: Отправляет статус доставки отправителю
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Status'
+      responses:
+        200:
+          description: Квитанция получена
+
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        sender:
+          type: string
+        text:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        isError:
+          type: boolean
+      required:
+        - sender
+        - text
+        - timestamp
+
+    Status:
+      type: object
+      properties:
+        messageId:
+          type: integer
+        status:
+          type: string
+          enum: [delivered, error]
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - messageId
+        - status
+        - timestamp

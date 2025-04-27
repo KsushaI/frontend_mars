@@ -1,0 +1,118 @@
+:root {
+  --primary-dark: #003247;
+  --primary-light: #E8E8E4;
+  --input-text: #384950;
+  --button-bg: #335E6F;
+  --button-text: white;
+}
+
+/* Base Layout - ALWAYS maintains 3 columns */
+.container {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Half styling with perfect vertical centering */
+.half {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Vertical center */
+  align-items: center; /* Horizontal center */
+  position: relative;
+}
+
+.first-half {
+  background: var(--primary-dark);
+}
+
+.second-half {
+  background: var(--primary-light);
+}
+
+/* Form positioning */
+.form-wrapper {
+  position: absolute;
+  bottom: 50px; /* Input 50px from bottom */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-btn {
+  /* Perfect centering */
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Smart sizing */
+  min-width: 120px;       /* Minimum shrink size */
+  max-width: 200px;       /* Maximum expansion */
+  width: 30vw;            /* Responsive base width */
+  padding: 0;             /* Padding handled by inner container */
+  
+  /* Visual styling */
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;       /* Ensures content stays within rounded borders */
+  
+  /* Text container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+/* Hover Effects */
+.login-btn:hover {
+  background: #2a5266; /* Slightly darker shade */
+  transform: translateX(-50%) scale(1.02);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/* Inner span for perfect text control */
+.login-btn span {
+  display: block;
+  padding: min(15px, 1.5vh) min(25px, 4vw);
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* Content Styling */
+.title {
+  color: var(--primary-light);
+  font-size: min(4rem, 6vw);
+  margin-bottom: 60px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.input-field {
+  width: min(600px, 80%);
+  padding: 15px 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: min(1.3rem, 3vw);
+  font-weight: bold;
+  background-color: var(  --primary-light);
+}
+
+/* Image Styling */
+.column-img {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+
