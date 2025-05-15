@@ -221,27 +221,27 @@ const activeConnections = new Map(); // username → Set<WebSocket>
 
 // Strictly follows Swagger schema
 app.post('/receiveMessage', (req, res) => {
-  const { sender, text, timestamp, isError } = req.body;
+  const { Username, Text, SendTime, Error } = req.body;
 
   // Validate against Swagger schema
-  if (typeof sender !== 'string' || typeof text !== 'string') {
+  if (typeof Username !== 'string' || typeof Text !== 'string') {
     return res.status(400).json({
       error: "Invalid message format",
       required: {
-        sender: "string",
-        text: "string",
-        timestamp: "string (ISO8601)",
-        isError: "boolean"
+        Username: "string",
+        Text: "string",
+        SendTime: "string (ISO8601)",
+        Error: "boolean"
       }
     });
   }
 
   // Prepare message according to Swagger example
   const marsMessage = {
-    sender,
-    text: isError ? `[ERROR] ${text}` : text,
-    timestamp: timestamp || new Date().toISOString(),
-    isError: !!isError
+    Username,
+    Text: Error ? `[ERROR] ${text}` : Text,
+    SendTime: SendTime || new Date().toISOString(),
+    Error: !!Error
   };
 
   // Broadcast to all connected clients
@@ -278,31 +278,19 @@ wss.on('connection', (ws, req) => {
   }
   activeConnections.get(username).add(ws);
 
-  // Send connection confirmation
-  ws.send(JSON.stringify({
-    sender: "User1",
-    text: `Привет!`,
-    timestamp: new Date().toISOString(),
-    isError: false
-  }));
-  ws.send(JSON.stringify({
-    sender: "User1",
-    text: `Тест 1`,
-    timestamp: new Date().toISOString(),
-    isError: true
-  }));/*
+/*
   ws.send(JSON.stringify({
     sender: "User2",
     text: `Тест 2`,
     timestamp: new Date().toISOString(),
     isError: true
-  }));
+  }));*/
   ws.on('close', () => {
     activeConnections.get(username)?.delete(ws);
     if (activeConnections.get(username)?.size === 0) {
       activeConnections.delete(username);
     }
-  });*/
+  });
 
   ws.on('message', () => {
     ws.send(JSON.stringify({
