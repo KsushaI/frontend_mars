@@ -338,6 +338,8 @@
   cursor: not-allowed;
 }*/
 
+/*
+
 :root {
   --primary-dark: #003247;
   --primary-light: #E8E8E4;
@@ -370,7 +372,7 @@
   margin-bottom: 20px;
   width: 100%;
 }
-/* Add to your existing CSS */
+
 .header-controls {
   display: flex;
   align-items: center;
@@ -535,7 +537,7 @@
   text-align: center;
 }
 
-/* Mobile styles */
+
 @media (max-width: 768px) {
   .chat-content {
     width: 95%;
@@ -552,7 +554,7 @@
   }
 }
 
-/* Animation for new messages */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -561,3 +563,341 @@
 .message {
   animation: fadeIn 0.3s ease-out;
 }
+*/
+
+:root {
+  --primary-dark: #003247;
+  --primary-light: #E8E8E4;
+  --input-text: #384950;
+  --button-bg: #335E6F;
+  --button-text: white;
+}
+
+/* Main chat page layout */
+.chat-page {
+  background-color: var(--primary-light);
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Wrapper for chat content */
+.chat-content {
+  width: 55%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Chat header styles */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: var(--primary-dark);
+  border: 1px solid var(--primary-dark);
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: var(--primary-dark);
+  color: white;
+}
+
+.chat-title {
+  color: var(--primary-dark);
+  font-size: 24px;
+  margin: 0;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--input-text);
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status-indicator.connected {
+  background-color: #4CAF50;
+}
+
+/* Chat container that holds messages */
+.chat-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  background-color: var(--primary-light);
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+
+/* Message bubble styles */
+.message {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  position: relative;
+  word-wrap: break-word;
+  margin-bottom: 8px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.message.sent {
+  background-color: var(--primary-dark);
+  color: var(--button-text);
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.message.received {
+  background-color: white;
+  color: var(--primary-dark);
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+/* Message header with sender and time */
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.message-sender {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.message-time {
+  padding-left: 15px;
+  font-size: 0.75em;
+  opacity: 0.8;
+}
+
+/* Message body text */
+.message-content {
+  word-break: break-word;
+  line-height: 1.4;
+  padding-right: 30px; /* Space for status icon */
+}
+
+/* Status indicator (✓, ✓✓, ❌) */
+.message-status {
+  position: absolute;
+  bottom: 4px;
+  right: 10px;
+  font-size: 16px;
+  display: block;
+  border-radius: 8px;
+  padding: 2px 2px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+/* Sent = gray */
+.message-status.sent,
+.message-status.delivered {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Error = red, but bigger and clearer on mobile */
+.message-status.error {
+  color: #f44336;
+}
+
+
+/* Input area styles */
+.message-input-container {
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+  background-color: var(--primary-light);
+  border-radius: 12px;
+  width: 100%;
+}
+
+.message-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid var(--button-bg);
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.message-input::placeholder {
+  color: var(--primary-dark);
+}
+
+.message-input:disabled {
+  cursor: not-allowed;
+  background-color: var(--primary-light);
+}
+
+.send-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 100px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+
+
+.send-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+  display: none; /* Hidden by default */
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.send-btn:hover svg {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  animation: fadeOut 3s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+/* Add media query for screens up to 450px */
+@media (max-width: 450px) {
+  /* Keep button next to input on all screen sizes */
+  .message-input-container {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  /* Force fixed size and circular shape for small screens */
+  .send-btn {
+    width: 50px;
+    height: 50px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Hide text and show plane icon only on small screens */
+  .send-btn .send-text {
+    display: none;
+  }
+  
+   /* Hide text if you keep it in JSX */
+   .send-btn span:not(svg) {
+    display: none;
+  }
+
+  /* Show the inline SVG only on small screens */
+  .send-btn svg {
+    display: block;
+  }
+  
+  /* Adjust message styling for small screens */
+  .message {
+    max-width: 90%;
+    font-size: 14px;
+  }
+  
+  .message-content {
+    font-size: 14px;
+  }
+}
+
+/* Mobile-specific styles (update existing media query) */
+@media (max-width: 768px) {
+  .chat-content {
+    width: 95%;
+  }
+
+  .message {
+    max-width: 90%;
+    padding: 10px 14px;
+    min-height: 40px;
+    padding-right: 40px;
+  }
+
+  .chat-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .message-status {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    padding: 4px 5px;
+    min-width: 24px;
+    font-size: 14px;
+    display: block;
+  }
+
+  .message-status.error {
+    font-size: 18px;
+  }
+  
+  .message-content {
+    padding-right: 4px;
+  }
+
+  /* Remove conflicting styles for message input container */
+  .message-input-container {
+    flex-direction: row;
+  }
+}
+
